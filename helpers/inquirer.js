@@ -62,6 +62,20 @@ const pausa = async() => {
 
 }
 
+const confirmar = async(msj) => {
+
+    const preguntaConfirmar = [{
+        type: 'confirm',
+        name: 'Confirmar',
+        message: msj
+    }];
+
+    console.log('\n');
+    const { Confirmar } = await inquirer.prompt(preguntaConfirmar);
+    console.log(Confirmar);
+    return Confirmar;
+}
+
 const leerInput = async(message) => {
     const preguntaPausa = [{
         type: 'input',
@@ -83,7 +97,12 @@ const leerInput = async(message) => {
 
 const listadoTareasBorrar = async(tareas) => {
 
-    let choices = [];
+    let choices = [
+        {
+            value: `0`,
+            name: `0. Cancelar`
+        }
+    ];
     tareas.forEach(({ desc, id }, index) => {
 
         const choise = {
@@ -108,9 +127,39 @@ const listadoTareasBorrar = async(tareas) => {
 
 };
 
+const listadoTareasCompletar = async(tareas) => {
+
+    let choices = [];
+    tareas.forEach(({ desc, id, completadoEn }, index) => {
+
+        const choise = {
+            value: `${id.toString()}`,
+            name: `${(index + 1).toString()}. ${desc}`,
+            checked: completadoEn ? true : false
+        };
+        choices.push(choise);
+    });
+
+
+
+    const preguntasBorrar = [{
+        type: 'checkbox',
+        name: 'ids',
+        message: 'Cual desea eliminar ?',
+        choices
+    }];
+
+    console.log('\n\n');
+    const { ids } = await inquirer.prompt(preguntasBorrar);
+    return ids;
+
+};
+
 module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
-    listadoTareasBorrar
+    listadoTareasBorrar,
+    confirmar,
+    listadoTareasCompletar
 };
