@@ -97,12 +97,10 @@ const leerInput = async(message) => {
 
 const listadoTareasBorrar = async(tareas) => {
 
-    let choices = [
-        {
-            value: `0`,
-            name: `0. Cancelar`
-        }
-    ];
+    let choices = [{
+        value: `0`,
+        name: `0. Cancelar`
+    }];
     tareas.forEach(({ desc, id }, index) => {
 
         const choise = {
@@ -130,10 +128,12 @@ const listadoTareasBorrar = async(tareas) => {
 const listadoTareasCompletar = async(tareas) => {
 
     let choices = [];
-    tareas.forEach(({ desc, id, completadoEn }, index) => {
+    tareas.forEach((tarea, index) => {
+        const { desc, id, completadoEn } = tarea;
 
         const choise = {
             value: `${id.toString()}`,
+            //value: tarea,
             name: `${(index + 1).toString()}. ${desc}`,
             checked: completadoEn ? true : false
         };
@@ -144,14 +144,14 @@ const listadoTareasCompletar = async(tareas) => {
 
     const preguntasBorrar = [{
         type: 'checkbox',
-        name: 'ids',
-        message: 'Cual desea eliminar ?',
+        name: 'tasks',
+        message: 'Cual desea completar ?',
         choices
     }];
 
     console.log('\n\n');
-    const { ids } = await inquirer.prompt(preguntasBorrar);
-    return ids;
+    const { tasks } = await inquirer.prompt(preguntasBorrar);
+    return tasks;
 
 };
 

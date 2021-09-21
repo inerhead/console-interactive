@@ -38,22 +38,23 @@ const main = async() => {
                 tareas.listadoPendientes();
                 break;
 
-                case '5':
-                  const ids = await listadoTareasCompletar(tareas.mostrarTareas());
-                  console.log(ids);
+            case '5':
+                const ids = await listadoTareasCompletar(tareas.mostrarTareas());
+
+                tareas.completarTareas(ids);
                 break;
 
             case '6':
                 const itemsBorrar = tareas.mostrarTareas();
                 const itemId = await listadoTareasBorrar(itemsBorrar);
-                if (itemId !== '0' ) {
+                if (itemId !== '0') {
                     const eliminar = await confirmar();
-                    if(eliminar){
+                    if (eliminar) {
                         tareas.borrarTarea(itemId);
                     }
                 }
-                //console.log(itemId);
-                
+
+
                 break;
 
 

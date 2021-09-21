@@ -70,6 +70,20 @@ class Tareas {
 
     }
 
+    completarTareas(ids = []) {
+
+        this._listado.forEach((list) => {
+
+            let task = ids.find((id) => id === list.id);
+
+            if (!task) {
+                list.completadoEn = false;
+            } else {
+                list.completadoEn = true;
+            }
+        });
+    }
+
 }
 
 module.exports = Tareas;
